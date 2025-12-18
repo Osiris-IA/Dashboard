@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYproject - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #f0f7f4;
+            --sidebar-color: #ffffff;
+            --primary-mint: #48c78e;
+            --dark-accent: #2c3e50;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2f1 0%, #f1f8e9 100%);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background: var(--sidebar-color);
+            transition: all 0.3s;
+            z-index: 1000;
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { margin-left: -250px; }
+            .sidebar.active { margin-left: 0; }
+            .main-content { margin-left: 0; }
+        }
+
+        /* Card Custom Design */
+        .custom-card {
+            border: none;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .custom-card:hover { transform: translateY(-5px); }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: #6c757d;
+            border-radius: 10px;
+            margin: 5px 15px;
+        }
+
+        .nav-link.active {
+            background-color: #e8f5e9 !important;
+            color: var(--primary-mint) !important;
+        }
+
+        .progress { height: 8px; border-radius: 10px; }
+        
+        .project-img {
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sidebar shadow-sm" id="sidebar">
+    <div class="p-4">
+        <h4 class="text-success fw-bold"><i class="bi bi-wallet2 me-2"></i>MYproject</h4>
+    </div>
+    <div class="nav flex-column mt-3">
+        <a href="#" class="nav-link active"><i class="bi bi-grid-1x2 me-3"></i>Dashboard</a>
+        <a href="#" class="nav-link"><i class="bi bi-kanban me-3"></i>Projets</a>
+        <a href="#" class="nav-link"><i class="bi bi-people me-3"></i>Équipe</a>
+        <a href="#" class="nav-link"><i class="bi bi-gear me-3"></i>Paramètres</a>
+    </div>
+</nav>
+
+<div class="main-content">
+    
+    <nav class="navbar navbar-expand-lg mb-4">
+        <div class="container-fluid">
+            <button class="btn btn-light d-lg-none me-2" onclick="toggleSidebar()">
+                <i class="bi bi-list"></i>
+            </button>
+            <h3 class="fw-bold mb-0">Hello, Vika! 👋</h3>
+            
+            <div class="ms-auto d-flex align-items-center">
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=Vika+Design&background=48c78e&color=fff" class="rounded-circle me-2" width="40">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item" href="#">Profil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#">Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card custom-card p-3">
+                <div class="d-flex align-items-center">
+                    <div class="stat-icon bg-light-subtle text-primary shadow-sm"><i class="bi bi-briefcase"></i></div>
+                    <div class="ms-3">
+                        <small class="text-muted">Projets Actifs</small>
+                        <h4 class="mb-0 fw-bold">12</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card custom-card p-3">
+                <div class="d-flex align-items-center">
+                    <div class="stat-icon bg-light-subtle text-success shadow-sm"><i class="bi bi-check2-circle"></i></div>
+                    <div class="ms-3">
+                        <small class="text-muted">Tâches Finies</small>
+                        <h4 class="mb-0 fw-bold">148</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card custom-card p-3">
+                <div class="d-flex align-items-center">
+                    <div class="stat-icon bg-light-subtle text-info shadow-sm"><i class="bi bi-people"></i></div>
+                    <div class="ms-3">
+                        <small class="text-muted">Membres</small>
+                        <h4 class="mb-0 fw-bold">24</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card custom-card p-3">
+                <div class="d-flex align-items-center">
+                    <div class="stat-icon bg-light-subtle text-warning shadow-sm"><i class="bi bi-currency-dollar"></i></div>
+                    <div class="ms-3">
+                        <small class="text-muted">Budget</small>
+                        <h4 class="mb-0 fw-bold">$8,280</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="card custom-card p-4">
+                <div class="d-flex justify-content-between mb-4">
+                    <h5 class="fw-bold">Liste des Tâches</h5>
+                    <button class="btn btn-sm btn-success rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#newProjectModal">
+                        <i class="bi bi-plus-lg me-1"></i> Nouveau Projet
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tâche</th>
+                                <th>Assigné</th>
+                                <th>Statut</th>
+                                <th>Priorité</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Refonte UI</td>
+                                <td><img src="https://i.pravatar.cc/30?u=1" class="rounded-circle me-2"> Alex</td>
+                                <td><span class="badge bg-soft-success text-success border border-success">Terminé</span></td>
+                                <td><span class="badge bg-danger">Haute</span></td>
+                                <td class="text-muted small">20 Oct</td>
+                            </tr>
+                            <tr>
+                                <td>API Integration</td>
+                                <td><img src="https://i.pravatar.cc/30?u=2" class="rounded-circle me-2"> Sophie</td>
+                                <td><span class="badge bg-warning text-dark">En cours</span></td>
+                                <td><span class="badge bg-primary">Moyenne</span></td>
+                                <td class="text-muted small">22 Oct</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card custom-card p-4 h-100 text-center">
+                <h5 class="fw-bold text-start mb-4">Progression mensuelle</h5>
+                <div class="my-auto">
+                    <i class="bi bi-bar-chart-line text-success" style="font-size: 5rem; opacity: 0.3;"></i>
+                    <p class="text-muted mt-3 small">Graphique Chart.js ici</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="fw-bold mb-3">Projets en cours</h5>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card custom-card overflow-hidden">
+                <img src="https://picsum.photos/400/200?random=1" class="project-img">
+                <div class="p-3">
+                    <h6 class="fw-bold">Application Mobile Wallet</h6>
+                    <p class="text-muted small">Refonte complète de l'expérience utilisateur...</p>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Progression</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-success btn-sm w-100">Voir</button>
+                        <button class="btn btn-light btn-sm w-100">Modifier</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+<div class="modal fade" id="newProjectModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius: 20px;">
+            <div class="modal-header border-0 p-4">
+                <h5 class="modal-title fw-bold">Créer un nouveau projet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 pt-0">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Nom du projet</label>
+                        <input type="text" class="form-control bg-light border-0" placeholder="Ex: Dashboard Admin">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Description</label>
+                        <textarea class="form-control bg-light border-0" rows="3"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label small fw-bold">Début</label>
+                            <input type="date" class="form-control bg-light border-0">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label small fw-bold">Priorité</label>
+                            <select class="form-select bg-light border-0">
+                                <option>Basse</option>
+                                <option>Moyenne</option>
+                                <option>Haute</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-success w-100 shadow-sm">Créer le projet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  position: fixed;
+  padding-top: 1rem;
+}
+
+.main-content {
+  margin-left: 280px;
+  padding: 20px;
+}
