@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -17,78 +17,446 @@
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    <script src="node_modules/chart.js/dist/chart.umd.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="styles.css" />
 
     <title>Dashboard de Gestion de Projet</title>
   </head>
   <body>
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar shadow-sm" style="width: 280px">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none mx-5">
-        <img src="assets/img1sf.png" alt="logo" width="40" height="40" />
-        <span class="fs-4">MYDash</span>
-      </a>
-      <hr />
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="#" class="nav-link active" aria-current="page">
-            <i class="fa-solid fa-gauge"></i><svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link link-dark">
-            <i class="fa-solid fa-diagram-project"></i></i><svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-            Projets
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link link-dark">
-            <i class="fa-solid fa-people-group"></i><svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-            Équipe
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link link-dark">
-            <i class="fa-solid fa-gear"></i><svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-            Paramètres
-          </a>
-        </li>
-      </ul>
-    </div>
+    <div class="d-flex">
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+      <div class="d-flex sidebar flex-column flex-shrink-0 p-3 bg-light shadow-sm">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none mx-5">
+          <img src="assets/img1sf.png" alt="logo" width="40" height="40" loading="lazy" />
+          <span class="fs-4">MYDash</span>
+        </a>
+        <ul class="nav nav-pills flex-column mb-auto py-4">
+          <li class="nav-item pt-2">
+            <a href="#dashboard" class="nav-link active" aria-current="page">
+              <i class="fa-solid fa-gauge"></i>
+              Dashboard
+            </a>
+          </li>
+          <li class="pt-2">
+            <a href="#project" class="nav-link link-dark"> <i class="fa-solid fa-diagram-project"></i> Projets </a>
+          </li>
+          <li class="pt-2">
+            <a href="#dashboard" class="nav-link link-dark"> <i class="fa-solid fa-people-group"></i> Équipe </a>
+          </li>
+          <li class="pt-2">
+            <a href="#" class="nav-link link-dark"> <i class="fa-solid fa-gear"></i> Paramètres </a>
+          </li>
+        </ul>
+      </div>
+      <div class="main-content w-full">
+        <header class="py-3 mb-4 border-bottom max-w-full">
+          <div class="container-fluid d-flex flex-wrap justify-content-between">
+            <button class="btn btn-link d-lg-none" id="sidebarToggle">
+              <i class="fa-solid fa-bars fs-4"></i>
+            </button>
+            <a href="#" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none gap-3">
+              <i class="fa-solid fa-house fa-md"></i> <i class="fa-solid fa-chevron-right fa-xs"></i> <span class="fs-8">Dashboard</span>
+            </a>
 
-    <div class="main-content">
-      <header class="py-3 mb-4">
-        <div class="container-fluid d-flex flex-wrap justify-content-between">
-          <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none gap-3">
-            <i class="fa-solid fa-house"></i> <i class="fa-solid fa-chevron-right "></i> <span class="fs-4">Home</span>
-          </a>
-
-          <div class="d-flex align-items-center gap-3">
-            <a href="#"><i class="fa-solid fa-bell"></i></a>
-            <div class="flex-shrink-0 dropdown">
-              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="assets/profil.jpg" alt="mdo" width="42" height="42" class="rounded-circle" />
-              </a>
-              <ul class="dropdown-menu text-small shadow">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-              </ul>
+            <div class="d-flex align-items-center gap-3">
+              <a href="#"><i class="fa-solid fa-bell" aria-label="Notification"></i></a>
+              <div class="flex-shrink-0 dropdown">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="assets/profil.jpg" alt="profil user" width="42" height="42" class="rounded-circle" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu text-small shadow">
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+              </div>
             </div>
           </div>
+        </header>
+
+        <div class="content px-4">
+          <div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              Bienvenue dans votre dashboard !
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          </div>
+
+          <main>
+            <div class="dashboard row g-4 my-4" id="dashboard">
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="shadow-sm p-4 bg-body rounded-4 h-100">
+                  <div class="card-body d-flex align-items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0d6efd" class="bi bi-briefcase p-2 shadow-sm bg-body rounded-3 icon-svg" viewBox="0 0 16 16">
+                      <path
+                        d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5"
+                      />
+                    </svg>
+
+                    <div>
+                      <h5 class="card-title">Projets actifs</h5>
+                      <p class="card-text">11</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="shadow-sm p-4 bg-body rounded-4 h-100">
+                  <div class="card-body d-flex align-items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffc107" class="bi bi-check2-circle p-2 shadow-sm bg-body rounded-3 icon-svg" viewBox="0 0 16 16">
+                      <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
+                      <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                    </svg>
+
+                    <div>
+                      <h5 class="card-title">Tâches complétées</h5>
+                      <p class="card-text">138</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="shadow-sm p-4 bg-body rounded-4 h-100">
+                  <div class="card-body d-flex align-items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#dc3545" class="bi bi-people p-2 shadow-sm bg-body rounded-3 icon-svg" viewBox="0 0 16 16">
+                      <path
+                        d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"
+                      />
+                    </svg>
+
+                    <div>
+                      <h5 class="card-title">Membres</h5>
+                      <p class="card-text">20</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="shadow-sm p-4 bg-body rounded-4 h-100">
+                  <div class="card-body d-flex align-items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6f42c1" class="bi bi-currency-euro p-2 shadow-sm bg-body rounded-3 icon-svg" viewBox="0 0 16 16">
+                      <path
+                        d="M4 9.42h1.063C5.4 12.323 7.317 14 10.34 14c.622 0 1.167-.068 1.659-.185v-1.3c-.484.119-1.045.17-1.659.17-2.1 0-3.455-1.198-3.775-3.264h4.017v-.928H6.497v-.936q-.002-.165.008-.329h4.078v-.927H6.618c.388-1.898 1.719-2.985 3.723-2.985.614 0 1.175.05 1.659.177V2.194A6.6 6.6 0 0 0 10.341 2c-2.928 0-4.82 1.569-5.244 4.3H4v.928h1.01v1.265H4v.928z"
+                      />
+                    </svg>
+
+                    <div>
+                      <h5 class="card-title">Budget restant</h5>
+                      <p class="card-text">8.000 €</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row my-5">
+              <div class="col-12 col-lg-7 mb-md-0 mb-4">
+                <div class="list border p-3 rounded-4 shadow-sm h-100">
+                  <h4 class="mb-4">Tâches récentes</h4>
+                  <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                      <thead class="table-light">
+                        <tr>
+                          <th scope="col">Tâches</th>
+                          <th scope="col">Assigné à</th>
+                          <th scope="col">Statut</th>
+                          <th scope="col">Priorité</th>
+                          <th scope="col">Deadline</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tableauTaches">
+                        <tr>
+                          <th scope="row">Refonte UI</th>
+                          <td><img src="assets/photo1.jpg" alt="photo de profil" width="40px" height="40px" class="rounded-5 me-2" loading="lazy" />Jacob</td>
+                          <td><span class="badge text-dark border border-dark rounded-pill">Terminée</span></td>
+                          <td><span class="badge bg-danger rounded-pill">Élevée</span></td>
+                          <td>20 Oct</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">API Integration</th>
+                          <td><img src="assets/photo3.jpg" alt="photo de profil" width="40px" height="40px" class="rounded-5 me-2" loading="lazy" />Ani</td>
+                          <td><span class="badge text-success border border-success rounded-pill">En cours</span></td>
+                          <td><span class="badge bg-warning rounded-pill">Moyenne</span></td>
+                          <td>11 Jan</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">NavResponsive</th>
+                          <td><img src="assets/photo2.jpg" alt="photo de profil" width="40px" height="40px" class="rounded-5 me-2" loading="lazy" />John</td>
+                          <td><span class="badge text-primary border border-primary rounded-pill">Prévu</span></td>
+                          <td><span class="badge bg-danger rounded-pill">Élevée</span></td>
+                          <td>25 Déc</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Social media</th>
+                          <td><img src="assets/photo4.jpg" alt="photo de profil" width="40px" height="40px" class="rounded-5 me-2" loading="lazy" />Mavis</td>
+                          <td><span class="badge text-success border border-success rounded-pill">En cours</span></td>
+                          <td><span class="badge bg-primary rounded-pill">Faible</span></td>
+                          <td>3 Nov</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Intégration Plugin</th>
+                          <td><img src="assets/photo5.jpg" alt="photo de profil" width="40px" height="40px" class="rounded-5 me-2" />Bill</td>
+                          <td><span class="badge text-warning border border-warning rounded-pill">En Pause</span></td>
+                          <td><span class="badge bg-warning rounded-pill">Moyenne</span></td>
+                          <td>27 Nov</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-5">
+                <div class="card rounded-4 border shadow-sm h-100 align-items-center">
+                  <div class="card-body">
+                    <h4 class="card-title">Graphique</h4>
+                    <canvas id="tasksByProjectChart" width="400" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-5 center">
+              <div class="col-6 col-lg-12 text-center text-lg-start align-items-center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Nouveau Projet</button>
+              </div>
+
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Créer un nouveau projet</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4 pt-0">
+                      <form action="traiter_tache.php" method="POST" id="formulaireTache">
+                        <div class="mb-3">
+                          <label for="projectName" class="form-label small fw-bold">Nom du Projet</label>
+                          <input type="text" id="projectName" name="projectName" class="form-control border-0 bg-light" placeholder="Ex: Dashboard" required />
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="projectDescription" class="form-label small fw-bold">Description</label>
+                          <textarea id="projectDescription" name="projectDescription" class="form-control border-0 bg-light" rows="3"></textarea>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-6 mb-3">
+                            <div class="form-floating">
+                              <input type="date" id="taskDate" name="taskDate" class="form-control bg-light border-0" />
+                              <label for="taskDate">Date</label>
+                            </div>
+                          </div>
+
+                          <div class="col-6 mb-3">
+                            <div class="form-floating">
+                              <select class="form-select bg-light border-0" id="taskPriority" name="taskPriority">
+                                <option value="">-- Sélectionner --</option>
+                                <option value="Élevée">Élevée</option>
+                                <option value="Moyenne">Moyenne</option>
+                                <option value="Faible">Faible</option>
+                              </select>
+                              <label for="taskPriority">Priorité</label>
+                            </div>
+                          </div>
+
+                          <div class="col-6 mb-3">
+                            <div class="form-floating">
+                              <select class="form-select bg-light border-0" id="taskStatus" name="taskStatus">
+                                <option value="">-- Sélectionner --</option>
+                                <option value="Terminée">Terminée</option>
+                                <option value="En cours">En cours</option>
+                                <option value="Prévu">Prévu</option>
+                                <option value="En pause">En pause</option>
+                              </select>
+                              <label for="taskPriority">Statut</label>
+                            </div>
+                          </div>
+
+                          <div class="col-6 mb-3">
+                            <div class="form-floating">
+                              <select class="form-select bg-light border-0" id="taskPriority" name="taskAssignee">
+                                <option value="">-- Sélectionner --</option>
+                                <option value="Jacob">Jacob</option>
+                                <option value="Ani">Ani</option>
+                                <option value="John">John</option>
+                                <option value="Mavis">Mavis</option>
+                                <option value="Bill">Bill</option>
+                              </select>
+
+                              <label for="taskPriority">Assigné à</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex gap-3 mt-4">
+                          <button type="button" class="btn btn-grey w-100" data-bs-dismiss="modal">Annuler</button>
+                          <button type="submit" class="btn btn-primary w-100">Créer</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="project row g-4 mb-4" id="project">
+              <h4 class="card-title mb-3">Projets en cours...</h4>
+
+              <div class="col-12 col-lg-4">
+                <div class="card h-100">
+                  <img src="assets/img1.png" class="card-img-top img-fluid object-fit-cover h-100" alt="image culinaire" loading="lazy" />
+                  <div class="card-body">
+                    <h5 class="card-title">Expérience Culinaire</h5>
+                    <p class="card-text">Conception d'un menu saisonnier haut de gamme avec accord mets et vins.</p>
+
+                    <span class="text-secondary">Progression </span>
+                    <span class="float-end text-secondary">75%</span>
+
+                    <div class="progress mb-4" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 8px">
+                      <div class="progress-bar w-75"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <a href="#" class="btn btn-primary">Voir détails</a>
+                      <a href="#" class="btn btn-grey">Modifier</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4">
+                <div class="card h-100">
+                  <img src="assets/img2.avif" class="card-img-top img-fluid object-fit-cover h-100" alt="image lounge" loading="lazy" />
+                  <div class="card-body">
+                    <h5 class="card-title">Aménagement Lounge</h5>
+                    <p class="card-text">Rénovation complète d'un espace bar et salon avec mobilier contemporain.</p>
+
+                    <span class="text-secondary">Progression </span>
+                    <span class="float-end text-secondary">40%</span>
+
+                    <div class="progress mb-4" role="progressbar" aria-label="Basic example" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: 8px">
+                      <div class="progress-bar w-40"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <a href="#" class="btn btn-primary">Voir détails</a>
+                      <a href="#" class="btn btn-grey">Modifier</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4">
+                <div class="card h-100">
+                  <img src="assets/img3.avif" class="card-img-top img-fluid object-fit-cover h-100" alt="image architecturale" loading="lazy" />
+                  <div class="card-body">
+                    <h5 class="card-title">Renaissance Florentine</h5>
+                    <p class="card-text">Analyse et préservation d'éléments architecturaux de la Renaissance.</p>
+
+                    <span class="text-secondary">Progression </span>
+                    <span class="float-end text-secondary">90%</span>
+
+                    <div class="progress mb-4" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="height: 8px">
+                      <div class="progress-bar w-90"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <a href="#" class="btn btn-primary">Voir détails</a>
+                      <a href="#" class="btn btn-grey">Modifier</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
         </div>
-      </header>
 
-      <main>
-        <section class="dashboard ">
-
-        </section>
-      </main>
-      <footer></footer>
+        <footer>
+          <div class="container-fluid py-4 border-top">
+            <p class="mb-0">&copy; 2026 Iris Hadjmahfoud. Tous droits réservés.</p>
+          </div>
+        </footer>
+      </div>
     </div>
+    <script src="path/to/chartjs/dist/chart.umd.min.js"></script>
+
+    <script>
+      const ctx = document.getElementById("tasksByProjectChart");
+
+      if (ctx) {
+        new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["En cours", "Terminées", "En pause", "À venir"],
+            datasets: [
+              {
+                label: "Tâches",
+                data: [12, 19, 3, 8],
+                backgroundColor: [
+                  "#48bb78", // (En cours)
+                  "#4299e1", // (Terminées)
+                  "#ff9800", // (En pause)
+                  "#ff4081", // (À venir)
+                ],
+                borderWidth: 2,
+                borderColor: "#ffffff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  padding: 15,
+                  font: {
+                    family: "Jost",
+                    size: 12,
+                  },
+                },
+              },
+              tooltip: {
+                backgroundColor: "rgba(0, 0, 0, 0.8)",
+                padding: 12,
+                titleFont: {
+                  size: 14,
+                },
+                bodyFont: {
+                  size: 13,
+                },
+              },
+            },
+          },
+        });
+      }
+    </script>
+
+    <script>
+      const sidebar = document.querySelector(".sidebar");
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+      sidebarToggle.addEventListener("click", function () {
+        sidebar.classList.toggle("show");
+        sidebarOverlay.classList.toggle("show");
+      });
+
+      sidebarOverlay.addEventListener("click", function () {
+        sidebar.classList.remove("show");
+        sidebarOverlay.classList.remove("show");
+      });
+
+      const navLinks = document.querySelectorAll(".sidebar .nav-link");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", function () {
+          sidebar.classList.remove("show");
+          sidebarOverlay.classList.remove("show");
+        });
+      });
+    </script>
   </body>
 </html>
